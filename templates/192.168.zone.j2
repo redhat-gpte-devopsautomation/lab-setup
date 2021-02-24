@@ -1,0 +1,24 @@
+$TTL 86400
+@   IN  SOA     control.example.com. root.control.example.com. (
+                                              3           ;Serial
+                                              3600        ;Refresh
+                                              1800        ;Retry
+                                              604800      ;Expire
+                                              86400       ;Minimum TTL
+)
+
+;Name Server Information
+@       IN  NS      control.example.com.
+
+;IP address of Name Server
+50.126        IN PTR      control.example.com.
+
+
+;A - Record HostName To Ip Address
+utilityvm     IN  A      192.168.50.205
+satellite    IN  A       192.168.50.11 
+
+
+;PTR - Record HostName To Ip Address
+205.50 IN PTR utilityvm.example.com.
+11.50  IN PTR satellite.example.com.

@@ -1,0 +1,24 @@
+- hosts: localhost
+  become: true
+  vars_files:
+    - ./vars/main.yaml
+  vars:
+    dns_zone_file: /var/named/example.com.zone
+ 
+  tasks:
+  - name: Insert host A records
+    lineinfile:
+      path: "{{ dns_zone_file }}"
+      state: "{{ record_state | default('present') }}"
+      regexp: EOF
+      line: "{{ item }} IN  A {{ hostvars[item]['ansible_host'] }}"
+    loop: "{{ groups.all }}"
+    notify: restart dns
+
+  handlers:
+  - name: restart dns
+    service:
+      name: named
+      state: restarted
+      enabled: yes
+
