@@ -1,6 +1,6 @@
 ---
 
-- hosts: towers,towerdbs
+- hosts: all
   become: true
   tasks:
     - include_vars: ./vars/common.yml

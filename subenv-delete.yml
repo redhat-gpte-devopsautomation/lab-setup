@@ -6,9 +6,5 @@
   vars_files:
     - "./vars/{{ env_type }}.yml" 
   tasks:
-  - name: Generate Heat Template
-    template:
-      src: ./templates/subenv_heat_template.j2
-      dest: /tmp/{{ env_type }}
-  - name: Create Heat stack from generated template
+  - name: Delete Heat stack from generated template
     command: openstack stack delete  --os-cloud {{ guid }}-project {{ env_type }}-stack-{{ guid }}
