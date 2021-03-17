@@ -1,0 +1,24 @@
+---
+    
+- hosts: localhost
+  tasks:
+    - include_vars: ./vars/common.yml
+    - os_server_info:
+        cloud: "{{ guid }}-project"
+      register: osp_instances
+    
+    - name: Create in-memory inventory
+      add_host:
+        name: "{{ __instance.name }}"
+        group: "{{ __instance.metadata.AnsibleGroup }}"
+        ansible_host: "{{ __instance.private_v4 }}" 
+        ansible_ssh_private_key_file: "{{ user_private_key_file }}"
+        ansible_user: cloud-user
+      loop: "{{ osp_instances.openstack_servers }}"
+      loop_control:
+        loop_var: __instance
+    - name: Inventory
+      template:
+        src: ./hosts.j2
+        dest: hosts
+
