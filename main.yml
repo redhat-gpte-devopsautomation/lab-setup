@@ -23,9 +23,8 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
     
-        - name: Configure lab environment
-          include_tasks: configs/lab-configure.yml
-    
+
+  
     - name: Destroy lab environment
       when: env_destroy | default(false) | bool
       block:
@@ -34,3 +33,9 @@
 
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
+
+- hosts: all:!controls:!bastions:!satellites
+  become: true
+  tasks:
+    - name: Configure lab environment
+      include_tasks: configs/lab-configure.yml
