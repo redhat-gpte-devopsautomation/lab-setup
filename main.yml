@@ -37,5 +37,10 @@
 - hosts: all:!controls:!bastions:!satellites
   become: true
   tasks:
+    - include_vars: "{{ item }}"
+      loop:
+        - /home/devops/materials/access_details.yml
+        - vars/common.yml
+        - environments/{{ env_type }}.yml
     - name: Configure lab environment
       include_tasks: configs/lab-configure.yml
