@@ -1,0 +1,36 @@
+---
+
+- name: Include variables
+  hosts:
+    - localhost
+  tasks:
+    - include_vars: "{{ item }}"
+      loop:
+        - /home/devops/materials/access_details.yml
+        - vars/common.yml
+        - environments/{{ env_type }}.yml
+
+    - set_fact:
+        guid: "{{ access_details.guid }}"
+        email: "{{ access_details.email }}"
+
+    - name: Provision and configure environment
+      when: "env_destroy | default(false) | bool != true"
+      block:
+        - name: Provision lab environment
+          include_tasks: configs/lab-provision.yml
+    
+        - name: Build inventory and records
+          include_tasks: configs/lab-inventory.yml
+    
+        - name: Configure lab environment
+          include_tasks: configs/lab-configure.yml
+    
+    - name: Destroy lab environment
+      when: env_destroy | default(false) | bool
+      block:
+        
+        - include_tasks: configs/lab-destroy.yml
+
+        - name: Build inventory and records
+          include_tasks: configs/lab-inventory.yml

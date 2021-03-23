@@ -20,7 +20,7 @@ __instance_type: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
 
 # Default Image
 __image: rhel-8.3
-
+app_instance_count: 2
 # Environment Instances
 instances:
   - name: app

@@ -1,8 +1,12 @@
 ---
+
+
+internal_domain: example.com
 user_private_key_file: /home/devops/.ssh/{{ guid }}key.pem
 user_public_key_file: /home/devops/.ssh/{{ guid }}key.pub
 satellite_url: satellite.example.com
-satellite_user_name: admin
-satellite_user_password: r3dh4t1!
+satellite_user_name: "{{ access_details.satellite_user }}"
+satellite_user_password: "{{ access_details.satellite_password }}"
 satellite_org: prod
 satellite_activationkey: gpte-labs-rhel8
+

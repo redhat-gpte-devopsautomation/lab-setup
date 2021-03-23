@@ -1,10 +1,7 @@
 ---
 
-- hosts: all
-  become: true
-  tasks:
-    - include_vars: ./vars/common.yml
-
+- become: true
+  block:
     - name: DNS IP updated
       lineinfile:
         state: present
@@ -16,13 +13,13 @@
       loop_control:
         loop_var: __network_conf
       register: network_update
-
+    
     - name: restart network manager
       service:
         name: NetworkManager
         state: restarted
       when: network_update.changed | bool
-
+    
     - name: install katello-ca-consumer package
       yum:
         name: http://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm
@@ -35,7 +32,7 @@
         activationkey: "{{ satellite_activationkey }}"
         org_id: "{{ satellite_org }}"
         auto_attach: true
-
+    
     - name: Enable repositories
       rhsm_repository:
         name: '*'

@@ -29,3 +29,6 @@ You can create your own env var file setting up the labs for your module.
 
 
 
+test:
+
+ansible-playbook main.yml    -e @vars/common.yml -e @vars/vars/{{ env_type }}.yml
