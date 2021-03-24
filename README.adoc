@@ -76,7 +76,7 @@ lab-setup
 . for license:  username: admin
 	      password: r3dh4t1!
 
-. Refresh pasge if fails for license
+. Refresh page if fails for license
 
 
 
