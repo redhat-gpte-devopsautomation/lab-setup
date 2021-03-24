@@ -13,7 +13,8 @@ lab-setup
 . cd ~/lab-setup
 
 * Directory contents
-====
+[source=textinfo]
+----
 .
 ├── configs
 │   ├── lab-configure.yml
@@ -42,8 +43,7 @@ lab-setup
     └── common.yml
 
 5 directories, 20 files
-
-====
+----
 
 == To provision and configure multitier
 . cd ~/lab-setup
