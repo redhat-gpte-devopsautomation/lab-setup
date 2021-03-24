@@ -6,7 +6,25 @@ ENV_TYPE can be any name you want to give according to the module.
 Provision Sub Lab Env
 =====================
 
-ansible-playbook main.yml  -e env_type=tower 
+== To provision and configure tower
+. ansible-playbook main.yml  -e env_type=tower 
+. wget https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
+. tar -xf ansible-tower-setup-latest.tar.gz 
+. cd ansible-tower-setup-3.8.2-1/
+. ./setup.sh -i ~/lab-setup/files/tower-inventory
+. cd ~/lab-setup
+. ansible-playbook tower-patch.yml
+. curl -k http://tower1.example.com/api/v2/ping/ |jq
+. ansible-playbook haproxy.yml
+
+. open browser https://control.{{ guid }}.dynamic.opentlc.com
+. type: username: admin
+      password: redhat
+. for license:  username: admin
+	      password: r3dh4t1!
+
+. Refresh pasge if fails for license
+
 
 What will happen when env is provisioned?
 =========================================
