@@ -95,7 +95,7 @@ Networks
 Important
 =========
 1. DNS Container is pre configured
-2. Satellite with Actication key is preconfigured
+2. Satellite with Activation key is preconfigured
 
 
 
