@@ -23,7 +23,7 @@ frontend towers
     http-request redirect scheme https unless { ssl_fc }
     use_backend towers
 backend towers
-    balance     roundrobin
+    balance source
 	{% for host in groups['towers'] %}
     server tower{{ loop.index }} {{ host }}:80 check
 	{% endfor %}
@@ -37,7 +37,7 @@ frontend frontends
     http-request redirect scheme https unless !{ ssl_fc }
     use_backend frontends
 backend frontends
-    balance     roundrobin
+    balance roundrobin
     server  frontend {{ groups['frontends'][0] }}:80 check
 {% endif %}
 
