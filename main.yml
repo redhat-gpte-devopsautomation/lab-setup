@@ -15,6 +15,8 @@
     - set_fact:
         guid: "{{ access_details.guid }}"
         email: "{{ access_details.email }}"
+        subdomain: "{{ access_details.subdomain }}"
+        
 
     - name: Provision lab environment
       when: "env_destroy | default(false) | bool != true"
@@ -25,9 +27,6 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
 
-        - name: Run haproxy pod
-          include_tasks: configs/setup-haproxy-pod.yml
-    
     - name: Destroy lab environment
       when: env_destroy | default(false) | bool
       block:

@@ -1,0 +1,18 @@
+- name: Setup Haproxy 
+  hosts: localhost
+  connection: localhost
+  gather_facts: false
+  tasks:
+    - include_vars: "{{ item }}"
+      loop:
+        - /home/devops/materials/access_details.yml
+        - vars/common.yml
+        - environments/{{ env_type }}.yml
+
+    - set_fact:
+        guid: "{{ access_details.guid }}"
+        email: "{{ access_details.email }}"
+        subdomain: "{{ access_details.subdomain }}"
+
+    - name: Run haproxy pod
+      include_tasks: configs/setup-haproxy-pod.yml
