@@ -7,7 +7,6 @@
       loop:
         - /home/devops/materials/access_details.yml
         - vars/common.yml
-        - environments/{{ env_type }}.yml
 
     - set_fact:
         guid: "{{ access_details.guid }}"

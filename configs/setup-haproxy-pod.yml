@@ -88,7 +88,7 @@
       service:
         name: haproxy-pod
         enabled: true
-        state: started
+        state: restarted
       async: 3000
       poll: 30
 
