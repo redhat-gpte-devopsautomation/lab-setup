@@ -3,6 +3,8 @@
 - name: Include variables
   hosts:
     - localhost
+  connection: localhost
+  gather_facts: false
   tasks:
     - include_vars: "{{ item }}"
       loop:
@@ -14,7 +16,7 @@
         guid: "{{ access_details.guid }}"
         email: "{{ access_details.email }}"
 
-    - name: Provision and configure environment
+    - name: Provision lab environment
       when: "env_destroy | default(false) | bool != true"
       block:
         - name: Provision lab environment
@@ -22,9 +24,10 @@
     
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
-    
 
-  
+        - name: Run haproxy pod
+          include_tasks: configs/setup-haproxy-pod.yml
+    
     - name: Destroy lab environment
       when: env_destroy | default(false) | bool
       block:
@@ -34,7 +37,8 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
 
-- hosts: all:!controls:!bastions:!satellites
+- name: Configure hosts
+  hosts: all:!controls:!bastions:!satellites
   become: true
   tasks:
     - include_vars: "{{ item }}"
@@ -42,5 +46,14 @@
         - /home/devops/materials/access_details.yml
         - vars/common.yml
         - environments/{{ env_type }}.yml
+
+    - set_fact:
+        guid: "{{ access_details.guid }}"
+        email: "{{ access_details.email }}"
+ 
     - name: Configure lab environment
-      include_tasks: configs/lab-configure.yml
+      when: "env_destroy | default(false) | bool != true"
+      block:
+        - name: Configure lab environment
+          include_tasks: configs/lab-configure.yml
+

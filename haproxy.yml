@@ -1,7 +1,0 @@
----
-- hosts: localhost
-  become: true
-  connection: local
-  gather_facts: false
-  tasks:
-    - include_tasks: configs/setup-haproxy-pod.yml
