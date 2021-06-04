@@ -1,0 +1,44 @@
+#/usr/bin/bash
+
+
+MAIN_PLAYBOOK=/opt/lab-setup/main.yml
+
+
+# CAlls
+# deploy,destroy
+
+if [ "${1}" == "deploy" ];then
+	case ${2} in
+		molecule) 
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
+			;;
+		tower)
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2}
+			;;
+	 	multitier)
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
+			;;
+		*)
+			echo "Environment is not available"
+		 ;;
+	esac
+
+	elif [ "${1}" == "destroy" ]; then
+	case ${2} in
+		molecule) 
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} -e env_destroy=true 
+			;;
+		tower)
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} -e env_destroy=true
+			;;
+	 	multitier)
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} -e env_destroy=true
+			;;
+		*)
+			echo "Environment is not available"
+		 ;;
+	esac
+
+	else
+		echo "Wrong option use deploy or destroy"
+fi
