@@ -1,7 +1,7 @@
 #/usr/bin/bash
 
 
-MAIN_PLAYBOOK=/opt/lab-setup/main.yml
+MAIN_PLAYBOOK=/srv/lab-setup/main.yml
 
 
 # CAlls
@@ -19,7 +19,7 @@ if [ "${1}" == "deploy" ];then
 			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
 			;;
 		*)
-			echo "Environment is not available"
+			echo "Environment is not available, Choose multitier, tower, molecule"
 		 ;;
 	esac
 
@@ -35,10 +35,10 @@ if [ "${1}" == "deploy" ];then
 			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} -e env_destroy=true
 			;;
 		*)
-			echo "Environment is not available"
+			echo "Environment is not available, Choose multitier, tower, molecule"
 		 ;;
 	esac
 
 	else
-		echo "Wrong option use deploy or destroy"
+		echo "Wrong option, Use deploy or destroy"
 fi
