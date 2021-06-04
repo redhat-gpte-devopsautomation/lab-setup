@@ -3,10 +3,8 @@
   connection: localhost
   gather_facts: false
   tasks:
-    - include_vars: "{{ item }}"
-      loop:
-        - /home/devops/materials/access_details.yml
-        - vars/common.yml
+    - name: Include variables
+      include_tasks: configs/include_vars.yml
 
     - set_fact:
         guid: "{{ access_details.guid }}"

@@ -2,7 +2,8 @@
 
 
 MAIN_PLAYBOOK=/srv/lab-setup/main.yml
-
+DEPLOY_ERROR_MSG="Environment is not available, Choose multitier, tower, molecule, haproxy, tower_patch"
+DESTROY_ERROR_MSG="Environment is not available, Choose multitier, tower, molecule"
 
 # CAlls
 # deploy,destroy
@@ -18,8 +19,15 @@ if [ "${1}" == "deploy" ];then
 	 	multitier)
 			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
 			;;
+	 	haproxy)
+			ansible-playbook haproxy.yml -e env_type=${2}
+			;;
+		tower_patch) 
+			ansible-playbook tower-patch.yml
+			;;
+			
 		*)
-			echo "Environment is not available, Choose multitier, tower, molecule"
+			echo "${DEPLOY_ERROR_MSG}"
 		 ;;
 	esac
 
@@ -35,7 +43,7 @@ if [ "${1}" == "deploy" ];then
 			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} -e env_destroy=true
 			;;
 		*)
-			echo "Environment is not available, Choose multitier, tower, molecule"
+			echo "${DESTROY_ERROR_MSG}"
 		 ;;
 	esac
 

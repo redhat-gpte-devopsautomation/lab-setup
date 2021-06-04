@@ -1,0 +1,8 @@
+---
+- include_vars: "{{ item }}"
+  loop:
+    - vars/access_details.yml
+    - vars/common.yml
+
+- include_vars: environments/{{ env_type }}.yml
+  when: env_type != "haproxy"
