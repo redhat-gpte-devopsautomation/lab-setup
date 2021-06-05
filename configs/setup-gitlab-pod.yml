@@ -1,0 +1,56 @@
+---
+#- hosts: localhost
+#  tasks:
+#    - name: Include variables
+#      include_tasks: /srv/lab-setup/configs/include_vars.yml
+
+- name: Set/reset root token
+  when: 'gitlab_root_token != gitlab_initial_token'
+  block:
+  - name: Set gitlab root token
+    shell: |
+      podman exec -it gitlab bash -c " 
+      gitlab-rails runner \"
+      token = User.find_by_username('root').personal_access_tokens.create(scopes: [:api], name: 'Playbook Token')
+      token.set_token('{{ gitlab_initial_token }}')
+      token.save!
+      \""
+
+  - name: Save gitlab root token 
+    lineinfile:
+      path: /srv/lab-setup/vars/common.yml
+      regex: '^gitlab_root_token*'
+      line: 'gitlab_root_token: {{ gitlab_initial_token }}'
+      state: present
+
+  - name: Include variables
+    include_tasks: configs/include_vars.yml
+
+
+- name: create gitlab user
+  uri:
+    url: http://{{ gitlab_host_url }}/api/v4/users/
+    method: POST
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+    body_format: form-urlencoded
+    status_code: 201
+    body:
+      enable_ssl_verification: false
+      name: "{{ __user.user }}"
+      username: "{{ __user.user }}"
+      password: "{{ __user.password }}"
+      email: "{{ __user.email }}"
+      admin: "{{__user.admin | default(omit) }}"
+      skip_confirmation: "{{ __user.admin | default(true) }}"
+  loop: "{{ gitlab_users }}"
+  loop_control:
+    loop_var: __user
+
+
+- name: List gitlab  projects
+  uri:
+    url: http://{{ gitlab_host_url }}/api/v4/projects/
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_root_token }}"

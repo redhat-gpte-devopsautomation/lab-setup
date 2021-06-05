@@ -5,4 +5,4 @@
     - vars/common.yml
 
 - include_vars: environments/{{ env_type }}.yml
-  when: env_type != "haproxy"
+  when: env_type != "pod"

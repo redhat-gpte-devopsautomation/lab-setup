@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Include variables
+      include_tasks: configs/include_vars.yml
+
+    - name: Include tasks
+      include_tasks: configs/setup-gitlab-pod.yml
+
