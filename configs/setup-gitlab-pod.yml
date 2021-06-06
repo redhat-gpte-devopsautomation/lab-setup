@@ -81,5 +81,5 @@
       default_branch: "{{ __project.default_branch | default('main') }}"
   when: __project.name not in register_project_list.json | json_query('[*].name')
   loop: "{{ gitlab_details.projects }}"
-    loop_control:
-      loop_var: __project
+  loop_control:
+    loop_var: __project
