@@ -53,7 +53,7 @@
 - name: find and set user id
   set_fact:
     gitlab_user_id: "{{ item.id }}"
-  when: 'item.name == "gitlab_details.user.name"'
+  when: 'item.name == gitlab_details.user.name'
   loop: "{{ register_user_list.json }}"
 
 - name: List gitlab  projects
@@ -64,7 +64,6 @@
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
   when: gitlab_user_id is defined
   register: register_project_list
-
 
 - name: create project
   uri:
@@ -82,7 +81,7 @@
       import_url: "{{ __project.repository }}"
       default_branch: "{{ __project.default_branch | default('main') }}"
   when: 
-    - "__project.name not in register_project_list.json | json_query('[*].name')"
+    - "__project.name not in register_project_list.json | json_query('[*].name' | default('none')"
     - "gitlab_user_id is defined"
   loop: "{{ gitlab_details.projects }}"
   loop_control:
