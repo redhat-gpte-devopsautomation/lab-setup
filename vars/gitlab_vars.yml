@@ -1,5 +1,6 @@
 ---
 # Gitlab Pod variables for configuration
+gitlab_pod_name: orchestration_gitlab_1
 gitlab_host_url: control.example.com:8929
 gitlab_initial_token: redhat@123
 gitlab_details:
