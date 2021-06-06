@@ -4,6 +4,7 @@
   when: gitlab_root_token | default('') != gitlab_initial_token
   block:
   - name: Set gitlab root token
+    become: true
     shell: |
       podman exec -it {{ gitlab_pod_name }} bash -c " 
       gitlab-rails runner \"
@@ -12,7 +13,8 @@
       token.save!
       \""
 
-  - name: Save gitlab root token 
+  - name: Save gitlab root token
+    become: true
     lineinfile:
       path: /srv/lab-setup/vars/gitlab_vars.yml
       regex: '^gitlab_root_token*'
