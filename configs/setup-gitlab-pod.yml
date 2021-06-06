@@ -81,8 +81,8 @@
       import_url: "{{ __project.repository }}"
       default_branch: "{{ __project.default_branch | default('main') }}"
   when: 
-    - "__project.name not in register_project_list.json | json_query('[*].name' | default('none')"
     - "gitlab_user_id is defined"
+    - "__project.name not in register_project_list.json | json_query('[*].name') | default('none')"
   loop: "{{ gitlab_details.projects }}"
   loop_control:
     loop_var: __project
