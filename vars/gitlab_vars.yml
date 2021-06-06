@@ -11,4 +11,3 @@ gitlab_details:
     - name: lab-setup
       repository: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
       visibility: public
-      default_branch: main

@@ -79,7 +79,6 @@
       name: "{{ __project.name }}"
       visibility: "{{ __project.visibility }}"
       import_url: "{{ __project.repository }}"
-      default_branch: "{{ __project.default_branch | default('main') }}"
   when: 
     - "gitlab_user_id is defined"
     - "__project.name not in register_project_list.json | json_query('[*].name') | default('none')"
