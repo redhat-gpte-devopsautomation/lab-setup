@@ -27,9 +27,37 @@
     include_tasks: configs/include_vars.yml
 
 
+# - name: create gitlab user
+#   uri:
+#     url: http://{{ gitlab_host_url }}/api/v4/users/
+#     method: POST
+#     headers:
+#       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+#     body_format: form-urlencoded
+#     status_code: 201
+#     body:
+#       enable_ssl_verification: false
+#       name: "{{ __user.user }}"
+#       username: "{{ __user.user }}"
+#       password: "{{ __user.password }}"
+#       email: "{{ __user.email }}"
+#       admin: "{{__user.admin | default(omit) }}"
+#       skip_confirmation: "{{ __user.admin | default(true) }}"
+#   loop: "{{ gitlab_users }}"
+#   loop_control:
+#     loop_var: __user
+
 - name: create gitlab user
   uri:
     url: http://{{ gitlab_host_url }}/api/v4/users/
+    method: GET
+  register: output
+
+- debug: var=output
+
+- name: create project
+  uri:
+    url: http://{{ gitlab_host_url }}/api/v4/projects/
     method: POST
     headers:
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
@@ -37,16 +65,11 @@
     status_code: 201
     body:
       enable_ssl_verification: false
-      name: "{{ __user.user }}"
-      username: "{{ __user.user }}"
-      password: "{{ __user.password }}"
-      email: "{{ __user.email }}"
-      admin: "{{__user.admin | default(omit) }}"
-      skip_confirmation: "{{ __user.admin | default(true) }}"
-  loop: "{{ gitlab_users }}"
-  loop_control:
-    loop_var: __user
-
+      user_id: 3
+      name: lab-setup1
+      import_url: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
+      visibility: public
+      default_branch: main
 
 - name: List gitlab  projects
   uri:
