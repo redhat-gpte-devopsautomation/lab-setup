@@ -10,6 +10,6 @@
 
 - name: include gitlab variables
   include_vars: vars/gitlab_vars.yml
-  when: 'pod_type == "haproxy"'
+  when: 'pod_type == "gitlab"'
 
 
