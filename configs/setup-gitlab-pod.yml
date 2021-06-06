@@ -47,8 +47,8 @@
       username: "{{ gitlab_details.user.name }}"
       password: "{{ gitlab_details.user.password }}"
       email: "{{ gitlab_details.user.email }}"
-      admin: "{{ gitlab_details.user.admin | bool | default(omit) }}"
-      skip_confirmation: "{{ gitlab_details.user.admin | bool | default(true) }}"
+      admin: "{{ gitlab_details.user.admin | default(omit) }}"
+      skip_confirmation: "{{ gitlab_details.user.admin | default(true) }}"
   when: gitlab_details.user.name not in  register_user_list.json| json_query('[*].name')
 
 # Create gitlab project for the user
