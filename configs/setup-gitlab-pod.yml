@@ -51,6 +51,8 @@
   uri:
     url: http://{{ gitlab_host_url }}/api/v4/users/
     method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_root_token }}"
   register: output
 
 - debug: var=output
