@@ -57,6 +57,22 @@
 
 - debug: var=output
 
+# - name: create project
+#   uri:
+#     url: http://{{ gitlab_host_url }}/api/v4/projects/
+#     method: POST
+#     headers:
+#       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+#     body_format: form-urlencoded
+#     status_code: 201
+#     body:
+#       enable_ssl_verification: false
+#       user_id: 2
+#       name: lab-setup
+#       import_url: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
+#       visibility: public
+#       default_branch: main
+
 - name: create project
   uri:
     url: http://{{ gitlab_host_url }}/api/v4/projects/
@@ -67,11 +83,11 @@
     status_code: 201
     body:
       enable_ssl_verification: false
-      user_id: 3
-      name: lab-setup1
-      import_url: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
-      visibility: public
-      default_branch: main
+      user_id: 2
+      name: lab-setup
+
+
+
 
 - name: List gitlab  projects
   uri:
