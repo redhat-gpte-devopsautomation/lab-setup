@@ -62,7 +62,9 @@
     method: GET
     headers:
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+  when: gitlab_user_id is defined
   register: register_project_list
+
 
 - name: create project
   uri:
@@ -79,7 +81,9 @@
       visibility: "{{ __project.visibility }}"
       import_url: "{{ __project.repository }}"
       default_branch: "{{ __project.default_branch | default('main') }}"
-  when: __project.name not in register_project_list.json | json_query('[*].name')
+  when: 
+    - "__project.name not in register_project_list.json | json_query('[*].name')"
+    - "gitlab_user_id is defined"
   loop: "{{ gitlab_details.projects }}"
   loop_control:
     loop_var: __project

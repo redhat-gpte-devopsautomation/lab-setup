@@ -8,11 +8,3 @@ satellite_user_name: "{{ access_details.satellite_user }}"
 satellite_user_password: "{{ access_details.satellite_password }}"
 satellite_org: prod
 satellite_activationkey: gpte-labs-rhel8
-gitlab_host_url: control.example.com:8929
-gitlab_initial_token: redhat@123
-gitlab_users:
-  - user: devops1
-    password: r3dh4t1!
-    email: devops1@opentlc.com
-
-gitlab_root_token: redhat@123
