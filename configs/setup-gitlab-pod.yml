@@ -1,7 +1,7 @@
 ---
 # set gitlab root token 
 - name: Set/reset root token
-  when: 'gitlab_root_token != gitlab_initial_token'
+  when: gitlab_root_token | default('') != gitlab_initial_token
   block:
   - name: Set gitlab root token
     shell: |
