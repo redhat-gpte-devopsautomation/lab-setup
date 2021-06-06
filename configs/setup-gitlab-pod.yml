@@ -1,9 +1,5 @@
 ---
-#- hosts: localhost
-#  tasks:
-#    - name: Include variables
-#      include_tasks: /srv/lab-setup/configs/include_vars.yml
-
+# set gitlab root token 
 - name: Set/reset root token
   when: 'gitlab_root_token != gitlab_initial_token'
   block:
@@ -18,7 +14,7 @@
 
   - name: Save gitlab root token 
     lineinfile:
-      path: /srv/lab-setup/vars/common.yml
+      path: /srv/lab-setup/vars/gitlab_vars.yml
       regex: '^gitlab_root_token*'
       line: 'gitlab_root_token: {{ gitlab_initial_token }}'
       state: present
@@ -26,56 +22,18 @@
   - name: Include variables
     include_tasks: configs/include_vars.yml
 
-
-# - name: create gitlab user
-#   uri:
-#     url: http://{{ gitlab_host_url }}/api/v4/users/
-#     method: POST
-#     headers:
-#       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
-#     body_format: form-urlencoded
-#     status_code: 201
-#     body:
-#       enable_ssl_verification: false
-#       name: "{{ __user.user }}"
-#       username: "{{ __user.user }}"
-#       password: "{{ __user.password }}"
-#       email: "{{ __user.email }}"
-#       admin: "{{__user.admin | default(omit) }}"
-#       skip_confirmation: "{{ __user.admin | default(true) }}"
-#   loop: "{{ gitlab_users }}"
-#   loop_control:
-#     loop_var: __user
-
-- name: create gitlab user
+# Create Gitlab user
+- name: get list of gitlab users
   uri:
     url: http://{{ gitlab_host_url }}/api/v4/users/
     method: GET
     headers:
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
-  register: output
+  register: register_user_list
 
-- debug: var=output
-
-# - name: create project
-#   uri:
-#     url: http://{{ gitlab_host_url }}/api/v4/projects/
-#     method: POST
-#     headers:
-#       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
-#     body_format: form-urlencoded
-#     status_code: 201
-#     body:
-#       enable_ssl_verification: false
-#       user_id: 2
-#       name: lab-setup
-#       import_url: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
-#       visibility: public
-#       default_branch: main
-
-- name: create project
+- name: create gitlab users
   uri:
-    url: http://{{ gitlab_host_url }}/api/v4/projects/
+    url: http://{{ gitlab_host_url }}/api/v4/users/
     method: POST
     headers:
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
@@ -83,15 +41,45 @@
     status_code: 201
     body:
       enable_ssl_verification: false
-      user_id: 2
-      name: lab-setup
+      name: "{{ gitlab_details.user.name }}"
+      username: "{{ gitlab_details.user.name }}"
+      password: "{{ gitlab_details.user.password }}"
+      email: "{{ gitlab_details.user.email }}"
+      admin: "{{ gitlab_details.user.admin | bool | default(omit) }}"
+      skip_confirmation: "{{ gitlab_details.user.admin | bool | default(true) }}"
+  when: gitlab_details.user.name not in  register_user_list.json| json_query('[*].name')
 
-
-
+# Create gitlab project for the user
+- name: find and set user id
+  set_fact:
+    gitlab_user_id: "{{ item.id }}"
+  when: 'item.name == "gitlab_details.user.name"'
+  loop: "{{ register_user_list.json }}"
 
 - name: List gitlab  projects
   uri:
-    url: http://{{ gitlab_host_url }}/api/v4/projects/
+    url: http://{{ gitlab_host_url }}/api/v4/users/{{ gitlab_user_id }}/projects
     method: GET
     headers:
       PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+  register: register_project_list
+
+- name: create project
+  uri:
+    url: "http://{{ gitlab_host_url }}/api/v4/projects/user/{{ gitlab_user_id }}"
+    method: POST
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_root_token }}"
+    body_format: form-urlencoded
+    status_code: 201
+    body:
+      enable_ssl_verification: false
+      user_id: "{{ gitlab_user_id }}"
+      name: "{{ __project.name }}"
+      visibility: "{{ __project.visibility }}"
+      import_url: "{{ __project.repository }}"
+      default_branch: "{{ __project.default_branch | default('main') }}"
+  when: item.name not in register_project_list.json | json_query('[*].name')
+  loop: "{{ gitlab_details.projects }}"
+    loop_control:
+      loop_var: __project

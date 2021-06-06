@@ -1,0 +1,14 @@
+---
+# Gitlab Pod variables for configuration
+gitlab_host_url: control.example.com:8929
+gitlab_initial_token: redhat@123
+gitlab_details:
+  user:
+    name: devops
+    password: r3dh4t1!
+    email: devops@example.com
+  projects:
+    - name: lab-setup
+      repository: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
+      visibility: public
+      default_branch: main
