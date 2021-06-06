@@ -79,7 +79,7 @@
       visibility: "{{ __project.visibility }}"
       import_url: "{{ __project.repository }}"
       default_branch: "{{ __project.default_branch | default('main') }}"
-  when: item.name not in register_project_list.json | json_query('[*].name')
+  when: __project.name not in register_project_list.json | json_query('[*].name')
   loop: "{{ gitlab_details.projects }}"
     loop_control:
       loop_var: __project
