@@ -9,6 +9,12 @@ gitlab_details:
     password: r3dh4t1!
     email: devops@example.com
   projects:
-    - name: lab-setup
-      repository: https://github.com/redhat-gpte-devopsautomation/lab-setup.git
+    - name: osp-infra-provisioner
+      repository: https://github.com/redhat-gpte-devopsautomation/aa_osp-infra-provisioner.git
+      visibility: public
+    - name: modular-three-tier-app
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
+      visibility: public
+    - name: multi-tier-app
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
       visibility: public
