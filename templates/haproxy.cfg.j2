@@ -32,9 +32,9 @@ backend towers
 
 {% if groups['frontends'] is defined %}
 frontend frontends
-    bind *:8080 
+    bind *:8080 ssl crt /etc/ssl/certs/cert.pem
     mode http
-    http-request redirect scheme https unless !{ ssl_fc }
+    http-request redirect scheme https unless { ssl_fc }
     use_backend frontends
 backend frontends
     balance roundrobin

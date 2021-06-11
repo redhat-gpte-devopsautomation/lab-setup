@@ -16,5 +16,5 @@ gitlab_details:
       repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
       visibility: public
     - name: multi-tier-app
-      repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-multi-tier-app.git
       visibility: public
