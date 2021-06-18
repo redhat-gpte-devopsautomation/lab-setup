@@ -10,11 +10,14 @@ gitlab_details:
     email: devops@example.com
   projects:
     - name: osp-infra-provisioner
-      repository: https://github.com/redhat-gpte-devopsautomation/aa_osp-infra-provisioner.git
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-osp-infra-provisioner.git
       visibility: public
     - name: modular-three-tier-app
       repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
       visibility: public
     - name: multi-tier-app
       repository: https://github.com/redhat-gpte-devopsautomation/aa-multi-tier-app.git
+      visibility: public
+    - name: osp-build-cloud
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-build-cloud-labs.git
       visibility: public
