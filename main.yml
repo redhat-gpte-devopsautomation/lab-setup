@@ -33,10 +33,8 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
 
-        - name: Restart haproxy pod
-          service:
-             name: haproxy-pod
-             state: restarted
+        - name: Reset haproxy pod
+          include_tasks: configs/setup-haproxy-pod.yml
 
 - name: Configure hosts
   hosts: all:!controls:!bastions:!satellites
