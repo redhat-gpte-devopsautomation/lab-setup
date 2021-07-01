@@ -55,8 +55,9 @@
     - name: Copy dns records
       template:
         src: templates/example.com.zone.j2
-        dest: "{{ dns_zone_file | default('/srv/bind/var/named/example.com.zone') }}"
+        dest: "{{ dns_zone_file | default('/opt/podman/volumes/bind9-volume/var/named/example.com.zone') }}"
 
     - name: restart_dns_pod
-      command: podman restart bind9-dns
-
+      service:
+        name: bind9-pod
+        state: restarted
