@@ -37,7 +37,7 @@
           include_tasks: configs/setup-haproxy-pod.yml
 
 - name: Configure hosts
-  hosts: all:!controls:!bastions:!satellites
+  hosts: all:!controls:!bastions:!satellites:!nodes
   become: true
   tasks:
     - name: Include variables
