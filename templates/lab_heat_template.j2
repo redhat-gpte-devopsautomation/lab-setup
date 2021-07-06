@@ -45,11 +45,14 @@ resources:
           delete_on_termination: true
           volume_size: {{ instance['rootfs_size'] | default(osp_default_rootfs_size) }}
           boot_index: 0
-
+      user_data_format: RAW 
       user_data: |
+     {% if instance.UserData is defined %}
+        {{ instance.UserData }}
+     {% else %}
         #cloud-config
         ssh_authorized_keys: {{ all_ssh_authorized_keys | to_json }}
-      user_data_format: RAW
+     {% endif %}
       networks:
         - network: {{guid}}-{{ instance.network }}-network
     {% if instance['metadata'] is defined %}
