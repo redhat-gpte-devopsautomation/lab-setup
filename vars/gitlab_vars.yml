@@ -9,9 +9,12 @@ gitlab_details:
     password: r3dh4t1!
     email: devops@example.com
   projects:
-    - name: three-tier-app
-      repository: https://github.com/redhat-gpte-devopsautomation/aa-three-tier-app.git
-      visibility: public 
+    - name: three-tier-app-contents
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-three-tier-app-contents.git
+      visibility: public
+    - name: three-tier-app-roles
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-three-tier-app-roles.git
+      visibility: public
     - name: modular-three-tier-app
       repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
       visibility: public
