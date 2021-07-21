@@ -2,8 +2,8 @@
 
 
 MAIN_PLAYBOOK=/srv/lab-setup/main.yml
-DEPLOY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, molecule, nodes, haproxy, tower_patch, gitlab \e[0m \n"
-DESTROY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, molecule, nodes \e[0m\n"
+DEPLOY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, finallab, molecule, nodes, haproxy, tower_patch, gitlab \e[0m \n"
+DESTROY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, finallab, molecule, nodes \e[0m\n"
 
 # CAlls
 # deploy,destroy
@@ -25,6 +25,9 @@ if [ "${1}" == "deploy" ];then
 	 	nodes)
 			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
 			;;
+		finallab)
+			ansible-playbook ${MAIN_PLAYBOOK} -e env_type=${2} 
+			;;	
 	 	haproxy)
 			ansible-playbook /srv/lab-setup/haproxy.yml -e env_type=pod -e pod_type=gitlab
 			;;
