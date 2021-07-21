@@ -10,11 +10,17 @@ gitlab_details:
     email: devops@example.com
   projects:
     - name: three-tier-app-contents
+      description: For Module 02 and Lab 02_03 Ansible Execution
       repository: https://github.com/redhat-gpte-devopsautomation/aa-three-tier-app-contents.git
       visibility: public
     - name: three-tier-app-roles
+      description: For Module 03 and Lab 03_03 Ansible Roles
       repository: https://github.com/redhat-gpte-devopsautomation/aa-three-tier-app-roles.git
       visibility: public
+    - name: jinja-heat-template
+      description: For Module 03 and Lab 03_02 Jinja Template
+      repository: https://github.com/redhat-gpte-devopsautomation/aa-jinja-heat-template.git
+      visibility: public    
     - name: modular-three-tier-app
       repository: https://github.com/redhat-gpte-devopsautomation/aa-modular-three-tier-app.git
       visibility: public
