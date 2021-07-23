@@ -60,7 +60,9 @@
   gather_facts: false
   tasks:
     - name: Install Tower for Final lab
-      when: env_type == "finallab"
+      when: 
+        - env_type == "finallab"
+        - env_destroy | default(false) != true
       block:
         - name: Include variables
           include_tasks: configs/include_vars.yml
