@@ -24,6 +24,9 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
 
+        - name: Setup haproxy pod
+          include_tasks: configs/setup-haproxy-pod.yml
+
     - name: Destroy lab environment
       when: env_destroy | default(false) | bool
       block:
@@ -69,8 +72,6 @@
           
         - name: Install Ansible Tower
           include_tasks: configs/install-towerfl.yml
-          
-        - name: Setup haproxy pod for finallab
-          include_tasks: configs/setup-haproxy-pod.yml
+
 
 
