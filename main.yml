@@ -24,12 +24,6 @@
         - name: Build inventory and records
           include_tasks: configs/lab-inventory.yml
 
-        - name: Clean in-memory inventory
-          meta: refresh_inventory
-
-        - name: Setup haproxy pod
-          include_tasks: configs/setup-haproxy-pod.yml
-
     - name: Destroy lab environment
       when: env_destroy | default(false) | bool
       block:
@@ -76,5 +70,14 @@
         - name: Install Ansible Tower
           include_tasks: configs/install-towerfl.yml
 
+- name: Configure Haproxy
+  hosts: localhost
+  connection: localhost
+  gather_facts: false
+  tasks:
+    - name: Clean in-memory inventory
+      meta: refresh_inventory
 
+    - name: Setup haproxy pod
+      include_tasks: configs/setup-haproxy-pod.yml
 
