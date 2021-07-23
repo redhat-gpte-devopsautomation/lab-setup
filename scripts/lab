@@ -25,7 +25,7 @@ DEPLOY_ENV_TYPES="multitier, threetier, tower, finallab, molecule, nodes, haprox
 DESTROY_ENV_TYPES="multitier, threetier, tower, finallab, molecule, nodes"
 
 # Custom error messages used with COW_MSG function
-LAB_OPTION_ERROR_MSG="Error: Wrong Option\n
+LAB_OPTION_ERROR_MSG="Error: Invalid Option\n
 Options: [deploy, destroy]\n
 Example: lab option argument"
 
@@ -39,7 +39,7 @@ Arguments: [${DEPLOY_ENV_TYPES}]\n
 Example: lab option argument"
 
 DESTROY_ERROR_MSG="
-Error: Argument doesn't exist\n
+Error: Invalid Argument\n
 Arguments: [${DESTROY_ENV_TYPES}]\n
 Example: lab option argument"
 
