@@ -46,7 +46,7 @@ Example: lab option argument"
 
 # Main Playbook
 MAIN_PLAYBOOK=/srv/lab-setup/main.yml
-ANSIBLE_CONFIG=/srv/lab-setup/ansible.cfg
+export ANSIBLE_CONFIG=/srv/lab-setup/ansible.cfg
 # CAlls
 # deploy,destroy
 
