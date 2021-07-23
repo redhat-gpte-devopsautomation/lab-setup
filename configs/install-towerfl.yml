@@ -3,9 +3,6 @@
     src: "https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-{{tower_version}}.tar.gz"
     dest: /tmp/
     remote_src: yes 
-  tags:
-    - install-tower
-
 
 - name: Remove directory if it exists
   file:
@@ -15,19 +12,9 @@
 - name: Rename the ansible tower setup directory name
   shell: mv /tmp/ansible-tower-setup-* /tmp/ansible-tower-setup-latest
 
-
-- name: Create template file
-  template:
-    src: tower_template_inventory.j2
-    dest: /tmp/ansible-tower-setup-latest/inventory
-  tags:
-    - install-tower
-
 - name: Run Ansible Tower setup
-  shell: ./setup.sh
+  shell: ./setup.sh -i /srv/lab-setup/files/towerfl-inventory
   args:
     chdir: /tmp/ansible-tower-setup-latest
   async: 3600
   poll: 36
-  tags:
-    - install-tower
