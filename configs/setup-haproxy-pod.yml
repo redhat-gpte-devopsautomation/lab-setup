@@ -2,39 +2,6 @@
 - name: Play for haproxy pod configuration
   become: true
   block:
-          #    - name: Create haproxy pod directory
-          #      file:
-          #        path: /opt/podman/resources/haproxypod
-          #        state: directory
-          #        owner: root
-          #        group: root
-          #        recurse: true
-          #        mode: "u=rwx,g=rx,o=rx"
-
-          #    - name: copy haproxy podman files
-          #      copy:
-          #        src: "{{ __file }}"
-          #        dest: /opt/podman/resources/haproxypod/
-          #      loop:
-          #        - "./files/haproxy-Dockerfile"
-          #        - "./files/haproxy-podman-compose.yml"
-          #      loop_control:
-          #        loop_var: __file
-          #
-          #    - name: Create haproxy pod volume directories
-          #      file:
-          #        path: "{{ __dir }}"
-          #        state: directory
-          #        owner: root
-          #        group: root
-          #        recurse: true
-          #        mode: "u=rwx,g=rx,o=rx"
-          #      loop:
-          #          - '/srv/haproxy/etc/haproxy'
-          #          - '/srv/haproxy/etc/ssl/certs'
-          #      loop_control:
-          #        loop_var: __dir
-
     - name: copy haproxy.cfg
       template:
         src: ./templates/haproxy.cfg.j2
@@ -75,14 +42,6 @@
         owner: root
         group: root
         mode: "u=rw,g=r,o=r"
-
-        #    - name: Create podman systemd service
-        #      template:
-        #        src: ./files/haproxy-pod.service
-        #        dest: "/etc/systemd/system/haproxy-pod.service"
-        #        owner: root
-        #        group: root
-        #        mode: "u=rw,g=r,o=r"
 
     - name: Enable and Start the new podman service
       service:

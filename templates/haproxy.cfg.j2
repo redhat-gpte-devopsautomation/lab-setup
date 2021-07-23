@@ -43,8 +43,8 @@ frontend towerfl
     bind *:8443 ssl crt /etc/ssl/certs/cert.pem
     mode http
     http-request redirect scheme https unless { ssl_fc }
-    use_backend towers
-backend towers
+    use_backend towerfl
+backend towerfl
     balance source
 	{% for host in groups['towerfl'] %}
     server tower{{ loop.index }} {{ host }}:80 check
