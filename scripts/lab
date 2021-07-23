@@ -29,7 +29,7 @@ LAB_OPTION_ERROR_MSG="Error: Invalid Option\n
 Options: [deploy, destroy]\n
 Example: lab option argument"
 
-LAB_COW_MSG="Error: Wrong Option\n
+LAB_COW_MSG="Error: Invalid Option\n
 Options: [deploy, destroy]\n
 Example: lab option argument"
 
@@ -111,6 +111,6 @@ if [ "${1}" == "deploy" ];then
 	esac
 
 	else
-		COW_MSG "${LAB_COW_MSG}"
+		COW_MSG "${LAB_OPTION_ERROR_MSG}"
 fi
 
