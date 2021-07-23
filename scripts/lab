@@ -1,6 +1,9 @@
 #/usr/bin/bash
-# Author: Mitesh The Mouse
-# Team: GPTE - Ansible
+# Author: 
+#   - Mitesh The Mouse, mitsharm@redhat.com
+#   - Prakhar Srivastava, psrivast@redhat.com
+# Team: Ansible Automation - GPTE
+# License: GPLv3
 
 # Output Display function, it uses cowsay when installed
 COW_MSG(){
