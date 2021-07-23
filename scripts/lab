@@ -1,8 +1,12 @@
 #/usr/bin/bash
 
 
+ENV_TYPES="multitier, threetier, tower, finallab, molecule, nodes, haproxy, tower_patch, gitlab"
 MAIN_PLAYBOOK=/srv/lab-setup/main.yml
-DEPLOY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, finallab, molecule, nodes, haproxy, tower_patch, gitlab \e[0m \n"
+DEPLOY_ERROR_MSG="
+\e[5;31;1m Environment is not available \e[0m \n 
+\e[32;1m Options [ ${ENV_TYPES} ] \e[0m \n"
+
 DESTROY_ERROR_MSG="\e[31;1m Environment is not available, Choose \e[5m multitier, threetier, tower, finallab, molecule, nodes \e[0m\n"
 
 # CAlls
