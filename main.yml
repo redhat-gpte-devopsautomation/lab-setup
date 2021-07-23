@@ -59,15 +59,16 @@
   connection: localhost
   gather_facts: false
   tasks:
-    - name: Include variables
-      include_tasks: configs/include_vars.yml
-    
-    - set_fact:
-        tower_version: "{{ tower_version }}"
-    
     - name: Install Tower for Final lab
       when: env_type == "finallab"
       block:
+        - name: Include variables
+          include_tasks: configs/include_vars.yml
+          
         - name: Install Ansible Tower
           include_tasks: configs/install-towerfl.yml
+          
+        - name: Setup haproxy pod for finallab
+          include_tasks: configs/setup-haproxy-pod.yml
+
 
