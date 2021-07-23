@@ -25,7 +25,7 @@
           include_tasks: configs/lab-inventory.yml
 
         - name: Clean in-memory inventory
-          meta: flush_inventory
+          meta: refresh_inventory
 
         - name: Setup haproxy pod
           include_tasks: configs/setup-haproxy-pod.yml
