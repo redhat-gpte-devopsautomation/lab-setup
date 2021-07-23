@@ -53,3 +53,21 @@
         - name: Configure lab environment
           include_tasks: configs/lab-configure.yml
 
+
+- name: Install Tower for finallab
+  hosts: localhost
+  connection: localhost
+  gather_facts: false
+  tasks:
+    - name: Include variables
+      include_tasks: configs/include_vars.yml
+    
+    - set_fact:
+        tower_version: "{{ tower_version }}"
+    
+    - name: Install Tower for Final lab
+      when: env_type == "finallab"
+      block:
+        - name: Install Ansible Tower
+          include_tasks: configs/install-towerfl.yml
+
